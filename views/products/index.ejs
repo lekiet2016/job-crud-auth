@@ -1,0 +1,38 @@
+<%- include('../partials/header') %>
+<h2>Products</h2>
+
+<form method="GET" action="/products">
+  <input name="q" placeholder="Search product or supplier" value="<%= q || '' %>">
+  <button type="submit">Search</button>
+  <% if (q) { %> <a href="/products">Clear</a> <% } %>
+</form>
+
+<% if (currentUser && currentUser.role === 'admin') { %>
+  <a href="/products/new">Add Product</a>
+<% } %>
+
+<table border="1" cellpadding="6" cellspacing="0">
+  <thead>
+    <tr><th>Name</th><th>Price</th><th>Quantity</th><th>Supplier</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+    <% products.forEach(p => { %>
+      <tr>
+        <td><%= p.name %></td>
+        <td><%= p.price %></td>
+        <td><%= p.quantity %></td>
+        <td><%= p.supplierId ? p.supplierId.name : '—' %></td>
+        <td>
+          <% if (currentUser && currentUser.role === 'admin') { %>
+            <a href="/products/<%= p._id %>/edit">Edit</a>
+            <form action="/products/<%= p._id %>?_method=DELETE" method="POST" style="display:inline;">
+              <button type="submit">Delete</button>
+            </form>
+          <% } %>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<%- include('../partials/footer') %>

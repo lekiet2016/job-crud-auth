@@ -1,0 +1,19 @@
+<%- include('../partials/header') %>
+<h2>Suppliers</h2>
+<% if (currentUser && currentUser.role === 'admin') { %>
+  <a href="/suppliers/new">Add Supplier</a>
+<% } %>
+<ul>
+  <% suppliers.forEach(s => { %>
+    <li>
+      <strong><%= s.name %></strong> — <%= s.address %> — <%= s.phone %>
+      <% if (currentUser && currentUser.role === 'admin') { %>
+        <a href="/suppliers/<%= s._id %>/edit">Edit</a>
+        <form action="/suppliers/<%= s._id %>?_method=DELETE" method="POST" style="display:inline">
+          <button type="submit">Delete</button>
+        </form>
+      <% } %>
+    </li>
+  <% }) %>
+</ul>
+<%- include('../partials/footer') %>

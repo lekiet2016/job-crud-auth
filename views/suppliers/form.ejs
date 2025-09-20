@@ -1,0 +1,9 @@
+<%- include('../partials/header') %>
+<h2><%= supplier && supplier._id ? 'Edit Supplier' : 'New Supplier' %></h2>
+<form action="<%= supplier && supplier._id ? '/suppliers/' + supplier._id + '?_method=PUT' : '/suppliers' %>" method="POST">
+  <input name="name" required placeholder="Name" value="<%= supplier.name || '' %>"><br>
+  <input name="address" placeholder="Address" value="<%= supplier.address || '' %>"><br>
+  <input name="phone" placeholder="Phone" value="<%= supplier.phone || '' %>"><br>
+  <button type="submit"><%= supplier && supplier._id ? 'Update' : 'Create' %></button>
+</form>
+<%- include('../partials/footer') %>
